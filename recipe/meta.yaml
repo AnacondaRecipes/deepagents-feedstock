@@ -1,0 +1,60 @@
+{% set name = "deepagents" %}
+{% set version = "0.7.29" %}
+
+package:
+  name: {{ name }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 9e778f5d5c513c102ad47f9b6b803144313dc6cbd5d6ca1db3cdb43c6695df50
+
+build:
+  number: 0
+  skip: true # [py<311]
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+
+requirements:
+  host:
+    - python
+    - setuptools >=83.0.0
+    - pip
+  run:
+    - python
+    - langchain-core >=1.6.12,<2.0.0
+    - langsmith >=0.14.11
+    - langchain >=1.4.6,<2.0.0
+    - langchain-anthropic >=1.7.6,<2.0.0
+    - langchain-google-genai >=4.4.2,<5.0.0
+    - packaging >=23.2
+    - wcmatch >=11.0
+  run_constrained:
+    - langchain-aws >=1.9.0,<2.0.0
+    - langchain-quickjs >=0.3.9
+    - av >=18.0.0,<19.0.0
+    - pillow >=12.3.0,<14.0.0
+
+test:
+  imports:
+    - deepagents
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://docs.langchain.com/oss/python/deepagents/overview
+  license: MIT
+  license_family: MIT
+  license_file: LICENSE
+  summary: General purpose 'deep agent' with sub-agent spawning, todo list capabilities, and mock file system. Built on LangGraph.
+  description: |
+    Deep Agents is an open source agent harness — an opinionated agent that runs out of the box. Extend, override, or replace any piece.
+  dev_url: https://github.com/langchain-ai/deepagents
+  doc_url: https://reference.langchain.com/python/deepagents/
+
+extra:
+  recipe-maintainers:
+    - ccurme
+    - mdrxy
+    - timpalpant
